@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DB_PATH = "backend/db/sqlgym.db"
+DB_PATH = "db/sqlgym.db"
 
 class EvalRequest(BaseModel):
     challenge_id: int

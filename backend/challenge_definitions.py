@@ -7,7 +7,7 @@ challenges = [
         "solution_sql": """
             SELECT * FROM users
         """,
-        "expected_columns": None,
+        "expected_columns": ["user_id", "name", "email", "signup_date"],
         "hints": [
             "Use SELECT * to get all columns.",
             "The FROM clause specifies the table."
