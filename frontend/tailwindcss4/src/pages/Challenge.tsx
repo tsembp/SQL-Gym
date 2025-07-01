@@ -26,15 +26,16 @@ export default function Challenge() {
 
   const getDifficultyStyles = (difficulty: string) => {
     switch (difficulty) {
-      case 'BASIC':
-      case 'EASY':
-        return 'bg-green-50 text-green-700';
-      case 'MEDIUM':
-        return 'bg-yellow-50 text-yellow-700';
-      default:
-        return 'bg-red-50 text-red-700';
+        case 'BASIC':
+            return 'bg-blue-50 text-blue-700 border border-blue-200';
+        case 'EASY':
+            return 'bg-green-50 text-green-700 border border-green-200';
+        case 'MEDIUM':
+            return 'bg-yellow-50 text-yellow-700 border border-yellow-200';
+        default:
+            return 'bg-red-50 text-red-700 border border-red-200';
     }
-  };
+    };
 
   return (
     <div className="px-8 py-8 max-w-[1400px] mx-auto">
