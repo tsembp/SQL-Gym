@@ -12,36 +12,36 @@ export const challengeApi = {
   getChallenges: async (difficulty?: string): Promise<Challenge[]> => {
     const params = difficulty ? { difficulty } : {};
     const response = await api.get('/challenges', { params });
-    return response.data;
+    return response.data as Challenge[];
   },
 
   // Get specific challenge
   getChallenge: async (id: number): Promise<Challenge> => {
     const response = await api.get(`/challenge/${id}`);
-    return response.data;
+    return response.data as Challenge;
   },
 
   // Get challenge solution
   getSolution: async (id: number): Promise<Solution> => {
-    const response = await api.get(`/challenge/${id}/solution`);
+    const response = await api.get<Solution>(`/challenge/${id}/solution`);
     return response.data;
   },
 
   // Evaluate user's SQL query
   evaluateQuery: async (request: EvalRequest): Promise<EvalResponse> => {
-    const response = await api.post('/evaluate', request);
+    const response = await api.post<EvalResponse>('/evaluate', request);
     return response.data;
   },
 
   // Get database schema
   getSchema: async (): Promise<TableSchema> => {
-    const response = await api.get('/schema');
+    const response = await api.get<TableSchema>('/schema');
     return response.data;
   },
 
   // Get table sample data
   getTableSample: async (tableName: string, limit: number = 5): Promise<{ data: any[] }> => {
-    const response = await api.get(`/tables/${tableName}/sample`, { params: { limit } });
+    const response = await api.get<{ data: any[] }>(`/tables/${tableName}/sample`, { params: { limit } });
     return response.data;
   },
 };

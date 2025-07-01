@@ -62,3 +62,9 @@ dist-ssr
 
 # TypeScript build artifacts (safety)
 *.tsbuildinfo
+
+# Vite cache
+frontend/.vite
+
+# Build output (if using Vite preview or Netlify output)
+frontend/.output
