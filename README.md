@@ -15,12 +15,25 @@ Built with a Python + FastAPI backend and a React + Tailwind frontend, SQLGym ev
 - ⚡ Local SQLite support for rapid development
 
 
-<!-- ## 📸 Preview
+// ...existing code...
 
-| Challenge Page                                 | SQL Editor with Feedback                      |
+## 📸 Preview
+
+| Home Page                                     | Filtered View                                  |
 |-----------------------------------------------|------------------------------------------------|
-| ![Home](./screenshots/challenges.png)         | ![Editor](./screenshots/editor.png)           | -->
+| ![Home](./screenshots/home-page.png)          | ![Challenge](./screenshots/home-page-filtered.png) |
 
+| Challenge Page                                | Correct Solution                               |
+|-----------------------------------------------|------------------------------------------------|
+| ![Correct](./screenshots/challenge-preview.png) | ![Incorrect](./screenshots/challenge-preview-correct.png) |
+
+| Incorrect Solution                      | SQL Injection Protection                                 |
+|-----------------------------------------------|------------------------------------------------|
+| ![SQLi](./screenshots/challenge-preview-incorrect.png) | ![Filtered](./screenshots/challenge-preview-sqli.png) |
+
+
+## 🚀 Getting Started
+// ...existing code...
 
 ## 🚀 Getting Started
 
