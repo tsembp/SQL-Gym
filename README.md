@@ -33,9 +33,6 @@ Built with a Python + FastAPI backend and a React + Tailwind frontend, SQLGym ev
 
 
 ## 🚀 Getting Started
-// ...existing code...
-
-## 🚀 Getting Started
 
 ### 1. Clone and setup environment
 
