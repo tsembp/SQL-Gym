@@ -29,25 +29,34 @@ export default function Home() {
     return (
         <>
             <div className="p-6 max-w-xl mx-auto">
-                <h1 className="text-2xl font-bold mb-4">🏋️ SQLGym Challenges</h1>
+                <h1 className="text-4xl sm:text-5xl font-bold mb-10 whitespace-nowrap">🏋️ SQLGym Challenges</h1>
                 <div className="flex gap-2 mb-4">
-                    {['ALL', 'BASIC', 'EASY', 'MEDIUM', 'HARD'].map((level) => (
-                        <button
-                        key={level}
-                        onClick={() => setSelectedDifficulty(level)}
-                        className={`text-sm px-3 py-1 rounded border ${
-                            selectedDifficulty === level
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
-                        >
-                        {level}
-                        </button>
-                    ))}
+                    {['ALL', 'BASIC', 'EASY', 'MEDIUM', 'HARD'].map((level) => {
+                        const isSelected = selectedDifficulty === level;
+
+                        // Use your existing color logic, plus custom style for 'ALL'
+                        const selectedStyles = level === 'ALL'
+                            ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
+                            : getDifficultyStyles(level);
+
+                        return (
+                            <button
+                            key={level}
+                            onClick={() => setSelectedDifficulty(level)}
+                            className={`text-sm px-3 py-1 rounded transition-colors duration-200 ${
+                                isSelected
+                                ? selectedStyles
+                                : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                            }`}
+                            >
+                            {level}
+                            </button>
+                        );
+                    })}
                 </div>
                 <ul className="space-y-3">
                     {challenges.filter(c => selectedDifficulty === 'ALL' || c.difficulty === selectedDifficulty).map(c => (
-                    <li key={c.id} className="border p-4 rounded hover:bg-gray-100">
+                    <li key={c.id} className="border p-4 rounded hover:bg-gray-100 transition-colors duration-300 ease-in-out">
                         <Link to={`/challenge/${c.id}`} className="flex justify-between items-center">
                             <div>
                             <h2 className="text-lg font-semibold">{c.title}</h2>

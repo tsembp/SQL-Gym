@@ -10,18 +10,36 @@ export default function Challenge() {
   const [challenge, setChallenge] = useState<Challenge | null>(null);
   const [query, setQuery] = useState('');
   const [result, setResult] = useState<EvalResponse | null>(null);
+  const [showHints, setShowHints] = useState(false);
 
   useEffect(() => {
     challengeApi.getChallenge(Number(id)).then(setChallenge);
   }, [id]);
 
   const handleSubmit = async () => {
-    const evalRequest: EvalRequest = { 
+    try {
+      const evalRequest: EvalRequest = { 
         challenge_id: Number(id),
         user_answer: query 
-    };
-    const res = await challengeApi.evaluateQuery(evalRequest);
-    setResult(res);
+      };
+      const res = await challengeApi.evaluateQuery(evalRequest);
+      setResult(res);
+    } catch (error: any) {
+      // Handle API errors (like 400 for dangerous SQL)
+      if (error.response?.status === 400) {
+        setResult({
+          success: false,
+          error: error.response.data.detail || "Request failed",
+          preview: []
+        });
+      } else {
+        setResult({
+          success: false,
+          error: "An unexpected error occurred",
+          preview: []
+        });
+      }
+    }
   };
 
   const getDifficultyStyles = (difficulty: string) => {
@@ -74,17 +92,26 @@ export default function Challenge() {
 
               {challenge.hints && challenge.hints.length > 0 && (
                 <div className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2 text-gray-900">
-                    Hints
-                  </h3>
-                  <ul className="list-none p-0 m-0">
-                    {challenge.hints.map((hint, index) => (
-                      <li key={index} className="text-sm text-gray-600 flex items-start mb-1">
-                        <span className="text-blue-500 mr-2">💡</span>
-                        {hint}
-                      </li>
-                    ))}
-                  </ul>
+                  <button
+                    onClick={() => setShowHints(prev => !prev)}
+                    className="text-sm text-blue-600 hover:underline focus:outline-none mb-2"
+                  >
+                    {showHints ? 'Hide Hints' : 'Show Hints'}
+                  </button>
+
+                  {showHints && (
+                    <>
+                      <h3 className="text-lg font-semibold mb-2 text-gray-900">Hints</h3>
+                      <ul className="list-none p-0 m-0">
+                        {challenge.hints.map((hint, index) => (
+                          <li key={index} className="text-sm text-gray-600 flex items-start mb-1">
+                            <span className="text-blue-500 mr-2">💡</span>
+                            {hint}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -195,22 +222,22 @@ export default function Challenge() {
                   <span className={`text-lg font-semibold ${
                     result.success ? 'text-green-700' : 'text-red-600'
                   }`}>
-                    {result.success ? '✅ Correct!' : '❌ Incorrect'}
+                    {result.success ? '✅ Correct!' : '❌ Error'}
                   </span>
                 </div>
-                
-                {result.error && (
-                  <p className="text-red-600 text-sm mb-2 m-0">
-                    {result.error}
-                  </p>
-                )}
-                
-                {result.message && (
-                  <p className="text-green-600 text-sm mb-2 m-0">
-                    {result.message}
-                  </p>
-                )}
 
+                {/* Show error message */}
+                {!result.success && result.error && (
+                  <div className="mb-3">
+                    <p className="text-red-700 text-sm font-medium">
+                      {result.error === "Dangerous SQL command detected" 
+                        ? "🚫 Dangerous SQL command detected."
+                        : result.error
+                      }
+                    </p>
+                  </div>
+                )}
+                
                 {result.preview && result.preview.length > 0 && (
                   <div className="mt-3">
                     <h4 className="text-gray-900 font-medium text-sm mb-2">
