@@ -44,13 +44,13 @@ python backend/db/db_seeder.py
 
 ```bash
 cd backend
-uvicorn backend.main:app --reload
+uvicorn main:app --reload
 ```
 
 ### 4. Setup frontend
 
 ```bash
-cd frontend
+cd frontend/tailwindcss4
 npm install
 npm run dev
 ```
